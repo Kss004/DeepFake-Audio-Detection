@@ -178,3 +178,69 @@ Convert model to ONNX or TorchScript for inference.
 Deploy on edge (mobile or embedded) with a fast audio preprocessor.  
 Add a confidence threshold for downstream decision-making (e.g., flagging uncertain cases).  
 Consider a hybrid pipeline with a heavy offline verifier and a lightweight real-time filter.
+
+
+
+## Setup Instructions
+
+### Prerequisites
+- Python 3.8 or higher
+- CUDA-capable GPU (recommended for training)
+
+### Environment Setup
+1. Clone the repository:
+```bash
+git clone [your-repository-url]
+cd [repository-name]
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv .venv
+# On Windows
+.venv\Scripts\activate
+# On macOS/Linux
+source .venv/bin/activate
+```
+
+3. Install required packages:
+```bash
+pip install torch torchaudio librosa matplotlib pandas scikit-learn tqdm numpy seaborn
+```
+
+### Dataset Preparation
+1. Download the audio datasets (link - https://zenodo.org/records/14498691 (ASVspoof5_protocols.tar.gz, flac_D_aa.tar, flac_t_aa.tar in this case))
+2. Place the audio files in the appropriate directories:
+   - Real audio samples: `data/train/real/`
+   - Fake audio samples: `data/train/fake/`
+   - For testing: `data/dev/real/` and `data/dev/fake/`
+
+### Creating the Required Directories and Running the project
+1. In order to simplify the whole process, i have done one thing. just run the Audio_Deepfake_detection.ipynb file once. here, doing this will make all the required directories and then also, organise the data into them for your convenience as well. once that is done, you can see the results of the MFCNN model used here.
+2. Once that is done, you can run the Main file , ie the Audio_Deepfak_detectino TinyAudioNet.ipynb file 
+
+## Usage
+
+### Training
+1. Open `Audio_Deepfake_Detection.ipynb` in Jupyter Notebook:
+```bash
+jupyter notebook Audio_Deepfake_Detection.ipynb
+```
+2. Follow the notebook cells to:
+   - Load and preprocess the data
+   - Train the TinyAudioNet model
+   - Evaluate the model performance
+
+### Testing
+1. Place your test audio files in the appropriate test directories
+2. Use the provided notebooks to run inference on new audio samples
+
+## Model Architecture
+
+### TinyAudioNet
+- Input: MFCC features (60 coefficients)
+- Architecture:
+  - 3 Convolutional layers with batch normalization
+  - Global average pooling
+  - 2 Fully connected layers
+  - Output: Binary classification (real/fake)
